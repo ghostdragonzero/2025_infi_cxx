@@ -50,9 +50,9 @@ int main(int argc, char **argv) {
     B b = B(3);
 
     // TODO: 补全三个类型的大小
-    static_assert(sizeof(X) == ?, "There is an int in X");
-    static_assert(sizeof(A) == ?, "There is an int in A");
-    static_assert(sizeof(B) == ?, "B is an A with an X");
+    static_assert(sizeof(X) == 4, "There is an int in X");
+    static_assert(sizeof(A) == 4, "There is an int in A");
+    static_assert(sizeof(B) == 8, "B is an A with an X");
 
     i = 0;
     std::cout << std::endl
@@ -67,7 +67,8 @@ int main(int argc, char **argv) {
     // THINK: 观察打印出的信息，推测把大象放进冰箱分几步？
     // THINK: 这样的代码是“安全”的吗？
     // NOTICE: 真实场景中不太可能出现这样的代码
-
+//可以简单理解成先创建了一个临时变量 B(5)，然后把这个临时变量的 A 部分拷贝到 ab 中
+//之后这个B(5)的临时变量就被销毁了
     i = 0;
     std::cout << std::endl
               << "-------------------------" << std::endl

@@ -4,14 +4,14 @@
 // READ: `std::map` <https://zh.cppreference.com/w/cpp/container/map>
 // READ: `std::unordered_map` <https://zh.cppreference.com/w/cpp/container/unordered_map>
 
-template<class k, class v>
-bool key_exists(std::map<k, v> const &map, k const &key) {
-    // TODO: 实现函数
+template<class K, class V>
+bool key_exists(std::map<K, V> const &map, K const &key) {
+    return map.find(key) != map.end();
 }
 
-template<class k, class v>
-void set(std::map<k, v> &map, k key, v value) {
-    // TODO: 实现函数
+template<class K, class V>
+void set(std::map<K, V> &map, K key, V value) {
+    map[key] = value;
 }
 
 // ---- 不要修改以下代码 ----

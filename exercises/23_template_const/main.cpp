@@ -11,6 +11,10 @@ struct Tensor {
     Tensor(unsigned int const shape_[N]) {
         unsigned int size = 1;
         // TODO: 填入正确的 shape 并计算 size
+        for (int i = 0; i < N; ++i) {
+            shape[i] = shape_[i];
+            size *= shape_[i];
+        }
         data = new T[size];
         std::memset(data, 0, size * sizeof(T));
     }
@@ -31,12 +35,25 @@ struct Tensor {
 
 private:
     unsigned int data_index(unsigned int const indices[N]) const {
-        unsigned int index = 0;
-        for (unsigned int i = 0; i < N; ++i) {
-            ASSERT(indices[i] < shape[i], "Invalid index");
-            // TODO: 计算 index
+            unsigned int index = 0;
+    unsigned int stride = 1;
+
+    // 从最后一个维度往前计算 stride（更高效）
+    // 但也可以从前往后：先算总 stride
+    // 这里采用从后往前预计算的方式，或直接在循环中累积
+
+    // 方法：从第0维到第N-1维，每一步乘以后续维度的大小
+    for (unsigned int i = 0; i < N; ++i) {
+        ASSERT(indices[i] < shape[i], "Invalid index");
+
+        // 计算当前维度之后所有维度的乘积（即 stride for dim i）
+        unsigned int dim_stride = 1;
+        for (unsigned int j = i + 1; j < N; ++j) {
+            dim_stride *= shape[j];
         }
-        return index;
+        index += indices[i] * dim_stride;
+    }
+    return index;
     }
 };
 
